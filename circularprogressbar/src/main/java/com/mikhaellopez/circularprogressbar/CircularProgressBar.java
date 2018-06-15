@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -22,6 +23,7 @@ public class CircularProgressBar extends View {
     private float backgroundStrokeWidth = getResources().getDimension(R.dimen.default_background_stroke_width);
     private int color = Color.BLACK;
     private int backgroundColor = Color.GRAY;
+    private  ObjectAnimator objectAnimator;
 
     // Object used to draw
     private int startAngle = -90;
@@ -63,6 +65,9 @@ public class CircularProgressBar extends View {
         foregroundPaint.setColor(color);
         foregroundPaint.setStyle(Paint.Style.STROKE);
         foregroundPaint.setStrokeWidth(strokeWidth);
+        
+        
+       
     }
     //endregion
 
@@ -164,7 +169,8 @@ public class CircularProgressBar extends View {
      * @param duration The length of the animation, in milliseconds.
      */
     public void setProgressWithAnimation(float progress, int duration) {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(this, "progress", progress);
+        objectAnimator = ObjectAnimator.ofFloat(this, "progress", progress);
+         objectAnimator.setAutoCancel(true);
         objectAnimator.setDuration(duration);
         objectAnimator.setInterpolator(new DecelerateInterpolator());
         objectAnimator.start();
